@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "skills": {
+    "summarize": {
+      "source": "steipete/summarize",
+      "sourceType": "github",
+      "skillPath": ".agents/skills/summarize/SKILL.md",
+      "computedHash": "6ff45fe6d1227809c3c08ddb2190516eb9a8fa123ba11d1362d65ccd693aca25"
+    }
+  }
+}
