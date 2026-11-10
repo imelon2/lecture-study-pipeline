@@ -1,18 +1,14 @@
 # Lecture Study Pipeline
 
-YouTube 강의를 **복습용 스터디 자료(Markdown)**와 **칠판 장면을 정돈한 도식(Excalidraw → PNG)**으로 만들고, 필요하면 **Notion 페이지**에 옮기는 Claude Code 작업 환경입니다.
+YouTube 강의 **복습용 스터디 자료(Markdown)** 제작 파이프라인 프로젝트
 
-```
-YouTube 강의 ──▶ 자막 추출 + 영상 장면 확인 ──▶ study/<번호>_<제목>.md
-                                         └──▶ study/assets/<번호>_<제목>/ (Excalidraw 원본 + PNG)
-                                                          └──▶ Notion 페이지 (이미지·토글 포함)
-```
 
 ## 구성
 
 | 경로 | 역할 |
 |---|---|
-| `GUIDE.md` | 스터디 자료·도식·Notion 작성 규칙. 모든 작업의 기준 문서 |
+| `AGENTS.md` | 스터디 자료·도식·Notion 작성 규칙. 에이전트가 자동으로 읽는 기준 문서 |
+| `CLAUDE.md` | Claude Code가 `AGENTS.md`를 읽도록 연결(`@AGENTS.md`) |
 | `.agents/skills/summarize` | `/summarize` 스킬(`.claude/skills/summarize`는 이 폴더의 심볼릭 링크) |
 | `tools/excalidraw_scene.py` | 칠판 장면을 Excalidraw Frame으로 그리는 도우미 |
 | `tools/lectures/*.py` | 강의별 도식 스크립트 |
@@ -26,7 +22,6 @@ YouTube 강의 ──▶ 자막 추출 + 영상 장면 확인 ──▶ study/<�
 
 | 도구 | 용도 | 설치 예시 |
 |---|---|---|
-| [Claude Code](https://claude.com/claude-code) | 작업 실행 | — |
 | Node.js + `summarize` CLI | YouTube 자막 추출 | `npm i -g @steipete/summarize` |
 | `yt-dlp` | 영상 다운로드(칠판 장면 확인용) | `pip install yt-dlp` |
 | `ffmpeg` | 영상에서 장면 캡처 | `sudo apt install ffmpeg` |
@@ -54,7 +49,7 @@ Claude Code에서 `/mcp` → `notion`을 선택해 로그인하고, 작성할 �
 Claude Code에서 요청합니다.
 
 ```
-/summarize '<YouTube URL>' GUIDE.md에 따라 스터디 자료를 만들어줘
+/summarize '<YouTube URL>' 스터디 자료를 만들어줘
 ```
 
 결과물은 `study/<번호>_<영상 제목>.md`와 `study/assets/<번호>_<영상 제목>/`에 저장됩니다. Notion에 옮길 때는 작성할 **페이지 링크를 함께** 알려 줍니다. 링크가 없으면 작성 위치를 먼저 묻습니다.
