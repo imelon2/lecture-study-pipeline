@@ -57,3 +57,15 @@ Claude Code에서 요청합니다.
 ```
 <자료 이름>을 '<Notion 페이지 링크>'에 작성해줘
 ```
+
+## 널널한 개발자 강의 영상·자막 받기 (make)
+
+공식 사이트(nullnull.co.kr) 강의는 개발자도구 **Network** 탭에서 `m3u8`로 검색해 `output_1080p.m3u8?Policy=...` URL 전체를 복사한 뒤 실행합니다.
+
+```bash
+make setup                                   # 처음 한 번: ffmpeg, whisper-cpp, 전사 모델 설치
+make video URL='<m3u8 URL 전체>'              # data/<번호>_<영상 번호>/lecture.mp4, lecture.srt
+make video URL='<m3u8 URL 전체>' NAME=이름    # data/<번호>_이름/
+```
+
+URL은 `&`가 있으므로 **작은따옴표**로 감쌉니다. URL은 시간이 지나면 만료되므로 복사 후 바로 실행합니다. `data/`는 git에서 제외됩니다.
