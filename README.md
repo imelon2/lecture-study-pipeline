@@ -60,10 +60,21 @@ Claude Code에서 요청합니다.
 
 ## 널널한 개발자 강의 영상·자막 받기 (make)
 
+**사전 준비**
+
+- `ffmpeg`
+- `whisper-cpp` (`whisper-cli`)
+- whisper 모델 `ggml-large-v3-turbo-q5_0.bin`
+
+```bash
+mkdir -p ~/.cache/whisper-cpp
+curl -L -o ~/.cache/whisper-cpp/ggml-large-v3-turbo-q5_0.bin \
+  https://huggingface.co/ggerganov/whisper.cpp/resolve/main/ggml-large-v3-turbo-q5_0.bin
+```
+
 공식 사이트(nullnull.co.kr) 강의는 개발자도구 **Network** 탭에서 `m3u8`로 검색해 `output_1080p.m3u8?Policy=...` URL 전체를 복사한 뒤 실행합니다.
 
 ```bash
-make setup                                   # 처음 한 번: ffmpeg, whisper-cpp, 전사 모델 설치
 make video URL='<m3u8 URL 전체>'              # data/<번호>_<영상 번호>/lecture.mp4, lecture.srt
 make video URL='<m3u8 URL 전체>' NAME=이름    # data/<번호>_이름/
 ```

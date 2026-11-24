@@ -122,10 +122,10 @@ def main():
 
     for tool in ("ffmpeg", "whisper-cli"):
         if not shutil.which(tool):
-            die(f"{tool}가 없습니다. `make setup`을 실행해 주세요.")
+            die(f"{tool}가 없습니다. 먼저 설치해 주세요.")
     model = pathlib.Path(a.model).expanduser()
     if not model.is_file():
-        die(f"모델 파일이 없습니다: {model}\n`make setup`을 실행해 주세요.")
+        die(f"모델 파일이 없습니다: {model}\nREADME의 사전 준비를 확인해 주세요.")
 
     m = re.search(r"/videos/([^/]+)/", u.path)
     name = a.name or (m.group(1) if m else "lecture")
