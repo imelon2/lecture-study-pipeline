@@ -95,6 +95,13 @@ def run(cmd, what):
         die(f"{what} 실패:\n" + "\n".join(err.splitlines()[-8:]))
 
 
+def picky_args():
+    # -extension_picky 는 ffmpeg 7.1.1 무렵 추가된 옵션이라 지원하는 버전에서만 넘깁니다.
+    r = subprocess.run(["ffmpeg", "-hide_banner", "-h", "demuxer=hls"],
+                       capture_output=True, text=True)
+    return ["-extension_picky", "0"] if "extension_picky" in r.stdout else []
+
+
 def next_dir(out_root, name):
     out_root.mkdir(parents=True, exist_ok=True)
     nums = [int(m.group(1)) for p in out_root.iterdir()
@@ -142,7 +149,7 @@ def main():
         log(f"영상 받는 중 (조각 {n}개)")
         run(["ffmpeg", "-nostdin", "-y", "-loglevel", "error",
              "-protocol_whitelist", "file,https,tcp,tls,crypto",
-             "-allowed_extensions", "ALL", "-extension_picky", "0",
+             "-allowed_extensions", "ALL", *picky_args(),
              "-i", str(tmp / "signed.m3u8"), "-c", "copy", str(tmp / "lecture.mp4")], "영상 병합")
 
         log("음성 변환 중")
